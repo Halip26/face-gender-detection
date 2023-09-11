@@ -6,7 +6,13 @@ Before running the code, do the following:
 - Download [face detection](https://raw.githubusercontent.com/opencv/opencv_3rdparty/dnn_samples_face_detector_20180205_fp16/res10_300x300_ssd_iter_140000_fp16.caffemodel) and [gender detection](https://drive.google.com/open?id=1W_moLzMlGiELyPxWiYQJ9KFaXroQ_NFQ) models and put them in the `weights` folder. Check [the tutorial](https://www.thepythoncode.com/article/gender-detection-using-opencv-in-python) for more on how to set it up.
 - Run the program:
 
-```python.exe .\predict_gender.py .\images\me.jpg```
+```bash
+python.exe .\images-gender-detect.py .\images\dna.jpg
+```
+
+## The Gender Predicted results
+
+![gender_predicted.jpg](output/gender_predicted.jpg)
 
 ## Completed codes & comments
 
@@ -46,7 +52,7 @@ frame_height = 720
 def get_faces(frame, confidence_threshold=0.5):
     # convert the frame into a blob to be ready for Neural Network input
     blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), (104, 177.0, 123.0))
-    # set the image as input to the NN
+    # set the image as input to the Neural Network
     face_net.setInput(blob)
     # perform inference and get predictions
     output = np.squeeze(face_net.forward())
