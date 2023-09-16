@@ -102,3 +102,82 @@ def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
         dim = (width, int(h * r))
     # ubah ukuran gambar
     return cv2.resize(image, dim, interpolation=inter)
+
+
+def predict_gender():
+    """Memprediksi jenis kelamin dari wajah yang ditampilkan dalam gambar"""
+
+    # Membuat objek kamera baru
+    cap = cv2.VideoCapture(0)
+
+    while True:
+        _, img = cap.read()
+        # ubah ukuran gambar, uncomment jika Anda ingin mengubah ukuran gambar
+        # img = cv2.resize(img, (frame_width, frame_height))
+        # Salin gambar awal dan ubah ukurannya
+        frame = img.copy()
+
+        if frame.shape[1] > frame_width:
+            frame = image_resize(frame, width=frame_width)
+
+        # Prediksi wajah
+        faces = get_faces(frame)
+
+        # Melakukan loop pada setiap wajah yang terdeteksi
+        for i, (start_x, start_y, end_x, end_y) in enumerate(faces):
+            face_img = frame[start_y:end_y, start_x:end_x]
+
+            blob = cv2.dnn.blobFromImage(
+                image=face_img,
+                scalefactor=1.0,
+                size=(227, 227),
+                mean=MODEL_MEAN_VALUES,
+                swapRB=False,
+                crop=False,
+            )
+
+            # Prediksi Jenis Kelamin
+            gender_net.setInput(blob)
+            gender_preds = gender_net.forward()
+            i = gender_preds[0].argmax()
+            gender = GENDER_LIST[i]
+            gender_confidence_score = gender_preds[0][i]
+
+            # Gambar persegi panjang
+            label = "{}-{:.2f}%".format(gender, gender_confidence_score * 100)
+            print(label)
+            yPos = start_y - 15
+            while yPos < 15:
+                yPos += 15
+
+            # Dapatkan skala font yang optimal untuk ukuran gambar ini
+            optimal_font_scale = get_optimal_font_scale(label, ((end_x - start_x) + 25))
+            box_color = (0, 128, 0) if gender == "Male" else (147, 20, 255)
+            cv2.rectangle(frame, (start_x, start_y), (end_x, end_y), box_color, 2)
+
+            # Label gambar yang telah diproses
+            cv2.putText(
+                frame,
+                label,
+                (start_x, yPos),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                optimal_font_scale,
+                box_color,
+                2,
+            )
+
+        # Tampilkan gambar yang telah diproses
+        cv2.imshow("Gender Estimator", frame)
+
+        if cv2.waitKey(1) == ord("q"):
+            break
+
+        # uncomment jika Anda ingin menyimpan gambar
+        # cv2.imwrite("output.jpg", frame)
+
+    # Membersihkan jendela yang terbuka
+    cv2.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    predict_gender()
