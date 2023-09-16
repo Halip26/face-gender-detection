@@ -108,10 +108,10 @@ def predict_gender():
     """Memprediksi jenis kelamin dari wajah yang ditampilkan dalam gambar"""
 
     # Membuat objek kamera baru
-    cap = cv2.VideoCapture(0)
+    capture = cv2.VideoCapture(0)
 
     while True:
-        _, img = cap.read()
+        _, img = capture.read()
         # ubah ukuran gambar, uncomment jika Anda ingin mengubah ukuran gambar
         # img = cv2.resize(img, (frame_width, frame_height))
         # Salin gambar awal dan ubah ukurannya
@@ -167,7 +167,7 @@ def predict_gender():
             )
 
         # Tampilkan gambar yang telah diproses
-        cv2.imshow("Gender Estimator", frame)
+        cv2.imshow("Predict Gender v1.0", frame)
 
         if cv2.waitKey(1) == ord("q"):
             break
