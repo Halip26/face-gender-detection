@@ -63,3 +63,42 @@ def get_faces(frame, confidence_threshold=0.5):
             # tambahkan ke dalam list
             faces.append((start_x, start_y, end_x, end_y))
     return faces
+
+
+def get_optimal_font_scale(text, width):
+    """Tentukan skala font yang optimal berdasarkan lebar bingkai hosting"""
+    # Mengevaluasi skala font dari yang terbesar hingga terkecil
+    for scale in reversed(range(0, 60, 1)):
+        # Menghitung ukuran teks dengan menggunakan cv2.getTextSize()
+        textSize = cv2.getTextSize(
+            text, fontFace=cv2.FONT_HERSHEY_DUPLEX, fontScale=scale / 10, thickness=1
+        )
+        new_width = textSize[0][0]
+        # Memeriksa apakah lebar teks yang dihasilkan sesuai dengan lebar frame yang diinginkan
+        if new_width <= width:
+            # Jika sesuai, mengembalikan skala font yang optimal
+            return scale / 10
+    # Jika tidak ada skala yang sesuai, mengembalikan skala default yaitu 1
+    return 1
+
+
+def image_resize(image, width=None, height=None, inter=cv2.INTER_AREA):
+    # inisialisasi dimensi gambar yang akan diubah ukurannya dan
+    # dapatkan ukuran gambar
+    dim = None
+    (h, w) = image.shape[:2]
+    # jika kedua lebar dan tinggi tidak ditentukan, maka kembalikan gambar asli
+    if width is None and height is None:
+        return image
+    # periksa apakah lebar tidak ditentukan
+    if width is None:
+        # hitung rasio tinggi dan konstruksi dimensi
+        r = height / float(h)
+        dim = (int(w * r), height)
+    # sebaliknya, jika tinggi tidak ditentukan
+    else:
+        # hitung rasio lebar dan konstruksi dimensi
+        r = width / float(w)
+        dim = (width, int(h * r))
+    # ubah ukuran gambar
+    return cv2.resize(image, dim, interpolation=inter)
