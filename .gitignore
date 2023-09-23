@@ -2,4 +2,6 @@ __pycache__/
 
 .pytest_cache/
 
-live_output.jpg
+*.jpg
+
+*.png

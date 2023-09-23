@@ -38,7 +38,7 @@ def get_faces(frame, confidence_threshold=0.5):
     face_net.setInput(blob)
     # melakukan inferensi dan mendapatkan prediksi
     output = np.squeeze(face_net.forward())
-    # inisialisasi list hasil
+    # inisialisasi variabel list faces
     faces = []
     # Looping melalui wajah yang terdeteksi
     for i in range(output.shape[0]):
@@ -123,6 +123,10 @@ def predict_gender():
         # Prediksi wajah
         faces = get_faces(frame)
 
+        # Menginisialisasi jumlah wajah male dan female
+        male_count = 0
+        female_count = 0
+
         # Melakukan loop pada setiap wajah yang terdeteksi
         for i, (start_x, start_y, end_x, end_y) in enumerate(faces):
             face_img = frame[start_y:end_y, start_x:end_x]
@@ -145,7 +149,15 @@ def predict_gender():
 
             # Gambar persegi panjang
             label = "{}-{:.2f}%".format(gender, gender_confidence_score * 100)
-            print(label)
+
+            # Menambahkan jumlah wajah male dan female
+            if gender == "Male":
+                male_count += 1
+                print(male_count, label)
+            else:
+                female_count += 1
+                print(female_count, label)
+
             yPos = start_y - 15
             while yPos < 15:
                 yPos += 15
