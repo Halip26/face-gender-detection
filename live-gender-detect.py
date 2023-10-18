@@ -31,7 +31,7 @@ frame_width = 1280
 frame_height = 720
 
 
-def get_faces(frame, confidence_threshold=0.5):
+def get_faces(frame, accuracy_threshold=0.5):
     # mengubah frame menjadi blob agar siap sebagai input Neural Network
     blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), (104, 177.0, 123.0))
     # mengatur gambar sebagai input untuk Neural Network
@@ -42,8 +42,8 @@ def get_faces(frame, confidence_threshold=0.5):
     faces = []
     # Looping melalui wajah yang terdeteksi
     for i in range(output.shape[0]):
-        confidence = output[i, 2]
-        if confidence > confidence_threshold:
+        accuracy = output[i, 2]
+        if accuracy > accuracy_threshold:
             box = output[i, 3:7] * np.array(
                 [frame.shape[1], frame.shape[0], frame.shape[1], frame.shape[0]]
             )
