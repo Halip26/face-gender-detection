@@ -185,7 +185,7 @@ def predict_gender():
             break
 
         # uncomment jika Anda ingin menyimpan gambar
-        cv2.imwrite("output/live_output.jpg", frame)
+        # cv2.imwrite("output/live_output.jpg", frame)
 
     # Membersihkan jendela yang terbuka
     cv2.destroyAllWindows()
