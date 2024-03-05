@@ -184,7 +184,7 @@ def predict_gender():
         if cv2.waitKey(1) == ord("q"):
             break
 
-        # uncomment jika Anda ingin menyimpan gambar
+        # uncomment jika kamu ingin menyimpan gambar
         # cv2.imwrite("output/live_output.jpg", frame)
 
     # Membersihkan jendela yang terbuka
