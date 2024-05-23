@@ -1,9 +1,10 @@
 # Gender Prediction
 
-This code is a Python script that uses OpenCV and Caffe models to predict the gender of faces detected in images or live video.
+This code is a Python script that uses OpenCV and Caffe models to predict the gender of faces detected in images or live camer.
+
 [Gender Detection using OpenCV in Python](https://www.thepythoncode.com/article/gender-detection-using-opencv-in-python)
 
-## The Gender Predicted results
+## Gender Prediction Results
 
 ![gender_predicted.jpg](output/gender_predicted.jpg)
 
