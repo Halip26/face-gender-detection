@@ -17,7 +17,7 @@ FACE_MODEL = "weights/res10_300x300_ssd_iter_140000_fp16.caffemodel"
 # sebuah tuple yang berisi nilai rata-rata untuk setiap channel dalam gambar
 MODEL_MEAN_VALUES = (78.4263377603, 87.7689143744, 114.895847746)
 
-# Mewakili 2 nama gender
+# Represents 2 gender names
 GENDER_LIST = ["Male", "Female"]
 
 # memuat model Caffe wajah
