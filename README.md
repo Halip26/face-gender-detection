@@ -6,7 +6,7 @@ This code is a Python script that uses OpenCV and Caffe models to predict the ge
 
 ## Gender Prediction Results
 
-![gender_predicted.jpg](output/gender_predicted.jpg)
+![gender_predicted.jpg](output/live-output-result.jpg)
 
 ## Prerequisites
 
